@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
 
 // imports
 import { Template } from 'meteor/templating';
@@ -12,37 +12,34 @@ Template.tooltippedIconText.onCreated(() => {
   // init state
   instance.state = {
     tooltipAttr: {},
-    iconAttr: {}
+    iconAttr: {},
   };
 
   // setup tooltip
-  if(instance.data.tooltipText) {
+  if (instance.data.tooltipText) {
     const classes = 'tooltipped disable-selection';
-    instance.state.tooltipAttr['class'] = instance.data.class?
-        instance.data.class+' '+classes:classes;
+    instance.state.tooltipAttr.class = instance.data.class ? `${instance.data.class} ${classes}` : classes;
     instance.state.tooltipAttr['data-tooltip'] = instance.data.tooltipText;
-    instance.state.tooltipAttr['data-position'] = instance.data.tooltipPosition?
-        instance.data.tooltipPosition:'top';
+    instance.state.tooltipAttr['data-position'] = instance.data.tooltipPosition ? instance.data.tooltipPosition : 'top';
   }
 
   // setup icon
   instance.state.iconAttr.name = instance.data.icon;
   if (instance.data.iconClass) {
-    instance.state.iconAttr['class'] = instance.data.iconClass;
+    instance.state.iconAttr.class = instance.data.iconClass;
   }
 });
 
 // on rendered
 Template.tooltippedIconText.onRendered(() => {
   const instance = Template.instance();
-  if(instance.data.text) {
-    const elements = instance.$('.tooltipped')
+  if (instance.data.text) {
+    const elements = instance.$('.tooltipped');
     const tooltips = M.Tooltip.init(elements, {
       html: instance.data.text,
-      enterDelay: 1500
-
-    })
-    instance.tooltip = _.first(tooltips)
+      enterDelay: 1500,
+    });
+    instance.tooltip = _.first(tooltips);
   }
 });
 
@@ -55,7 +52,7 @@ Template.tooltippedIconText.helpers({
   iconAttr() {
     const instance = Template.instance();
     return instance.state.iconAttr;
-  }
+  },
 });
 
 // events
@@ -72,6 +69,6 @@ Template.tooltippedIconText.helpers({
 
 // on destroyed
 Template.tooltippedIconText.onDestroyed(() => {
-  const instance = Template.instance()
-  instance.tooltip.destroy()
+  const instance = Template.instance();
+  instance.tooltip.destroy();
 });
